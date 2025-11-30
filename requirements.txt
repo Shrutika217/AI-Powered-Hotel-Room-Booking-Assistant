@@ -1,0 +1,13 @@
+streamlit
+PyPDF2
+numpy
+scikit-learn
+google-generativeai
+requests
+pytesseract
+pdf2image
+Pillow
+pypdfium2
+transformers
+torch
+python-dotenv
