@@ -144,12 +144,14 @@ touch .env
 
 Add values:
 
+```env
 GEMINI_API_KEY = "your_key_here"
 SENDGRID_API_KEY = "your_key_here"
 EMAIL_FROM = "hotelbot@example.com"
 SMTP_HOST="smtp.sendgrid.net"
 SMTP_PORT="587" 
 DEV_MODE=0      # for calling the SendGrid API. In developement stage, use DEV_MODE=1 to get the verfication code on the frontend without having to call the API.
+```
 
 ### 5. Initialize the Database
 
