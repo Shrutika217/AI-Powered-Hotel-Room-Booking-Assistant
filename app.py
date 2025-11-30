@@ -1370,9 +1370,17 @@ def chat_page():
    # ============================================================
    # Chat input (ONLY when not in calendar mode)
    # ============================================================
+   if not st.session_state.get("vector_store"):
+    st.chat_input(
+        "Please upload a hotel brochure to start chatting…",
+        disabled=True
+    )
+    return
+
+  # If brochure is uploaded → enable chat
    user_input = st.chat_input("Ask something or say 'I want to book a room'…")
    if not user_input:
-       return
+      return
 
    user_text = user_input.strip()
 
@@ -1543,5 +1551,6 @@ def main():
 
 if __name__ == "__main__":
   main()
+
 
 
