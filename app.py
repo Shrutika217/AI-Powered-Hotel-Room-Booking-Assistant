@@ -592,7 +592,7 @@ def handle_booking_step(user_text: str, session_state: dict) -> str:
           slots["name"] = user_text.strip()
           bs["step"] = "ask_email"
           session_state["booking_state"] = bs
-          return f"Wekcome {slots['name']}! Please provide your email id for verification."
+          return f"Welcome {slots['name']}! Please provide your email id for verification."
       else:
           return "That doesn't look like a valid full name. Please provide first and last name (e.g., 'Shrutika Gupta')."
 
@@ -1537,6 +1537,7 @@ def main():
 
 if __name__ == "__main__":
   main()
+
 
 
 
