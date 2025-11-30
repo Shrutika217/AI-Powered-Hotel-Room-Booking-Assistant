@@ -592,7 +592,7 @@ def handle_booking_step(user_text: str, session_state: dict) -> str:
           slots["name"] = user_text.strip()
           bs["step"] = "ask_email"
           session_state["booking_state"] = bs
-          return f"Guest name set to {slots['name']}. Please provide your email id for verification."
+          return f"Wekcome {slots['name']}! Please provide your email id for verification."
       else:
           return "That doesn't look like a valid full name. Please provide first and last name (e.g., 'Shrutika Gupta')."
 
@@ -1008,17 +1008,6 @@ def persist_booking_and_send_confirmation(session_state: dict) -> Tuple[bool, st
 # -------------------------
 # UI pages
 # -------------------------
-def instructions_page():
-  st.title("Hotel Booking Assistant — Instructions")
-  st.markdown(
-      """
-      Upload a PDF brochure (small) and ask questions.
-      This app uses TF-IDF for retrieval and a deterministic booking flow with email verification.
-      To start a booking: say "I want to book" or "I want to reserve".
-      If you are currently in a booking session and want to ask about the brochure, reply `info` when prompted.
-      """
-  )
-
 def admin_page():
     st.title(" Admin Dashboard – Hotel Bookings")
 
@@ -1149,7 +1138,7 @@ def init_booking_state(session_state: dict):
   }
 
 def chat_page():
-   st.title("🏨 AI Hotel Booking Assistant")
+   st.title("AI Hotel Booking Assistant")
    st.markdown("**Welcome guest! How may I assist you today?** Upload the hotel brochure to enable the chat feature.")
 
 
@@ -1259,7 +1248,6 @@ def chat_page():
                status.error("Error reading PDF.")
 
    # ---- One-time quit instruction ----
-# ---- One-time quit instruction ----
    if len(st.session_state.messages) == 0:
     notice_msg = (
         "*Tip:* You can type **end**, **quit**, or **exit** anytime to end the current session.\n"
@@ -1284,7 +1272,7 @@ def chat_page():
    scroll_to_bottom()
 
    # ============================================================
-   #      🚨  DATE PICKER MODE — EXACT SAME LOGIC FOR BOTH  🚨
+   #                       DATE PICKER MODE 
    # ============================================================
    bs = st.session_state.get("booking_state")
    if bs and bs.get("active"):
@@ -1292,7 +1280,7 @@ def chat_page():
        slots = bs["slots"]
 
        # ------------------------------------------------------------
-       #        CHECK-IN CALENDAR  (NOW IDENTICAL TO CHECK-OUT)
+       #                    CHECK-IN CALENDAR
        # ------------------------------------------------------------
        if step == "ask_checkin":
            st.markdown("**Select your check-in date:**")
@@ -1530,9 +1518,9 @@ def main():
 
   with st.sidebar:
       st.title("Navigation")
-      page = st.radio("Go to:", ["Chat", "Admin Dashboard", "Instructions"])
+      page = st.radio("Go to:", ["Chat", "Admin Dashboard"])
       st.markdown("---")
-      if st.button("🗑️ Clear Chat"):
+      if st.button("Clear Chat"):
           st.session_state.messages = []
           st.session_state.booking_state = None
           st.experimental_rerun()
@@ -1545,12 +1533,11 @@ def main():
   if page == "Chat":
       chat_page()
   elif page == "Admin Dashboard":
-      admin_page()
-  else:
-      instructions_page()
+    admin_page()
 
 if __name__ == "__main__":
   main()
+
 
 
 
