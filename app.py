@@ -1207,8 +1207,15 @@ def chat_page():
 
         try:
                combined = b"\n".join(files_bytes)
-               extracted = extract_text_from_pdf_bytes(combined)
-               text = "\n".join(extracted) if isinstance(extracted, list) else str(extracted or "")
+               # Primary extractor
+               raw = extract_text_from_pdf_bytes(combined)
+               text = "\n".join(raw) if isinstance(raw, list) else str(raw or "")
+              
+               # If cloud returned garbage → fallback to pdfplumber
+               if (not text) or (len(text.strip()) < 150) or ("Guests" in text[:50]):
+                  from models.embeddings import safe_extract_pdf_text
+                  text = safe_extract_pdf_text(combined)
+
                progress.progress(20)
 
 
@@ -1536,4 +1543,5 @@ def main():
 
 if __name__ == "__main__":
   main()
+
 
