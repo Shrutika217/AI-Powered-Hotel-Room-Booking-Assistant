@@ -10,4 +10,5 @@ Pillow
 pypdfium2
 transformers
 torch
+pdfplumber
 python-dotenv
