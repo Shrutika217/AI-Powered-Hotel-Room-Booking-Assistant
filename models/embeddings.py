@@ -1,5 +1,7 @@
 # models/embeddings.py
 import io
+import pdfplumber
+import re
 import hashlib
 import pickle
 from pathlib import Path
@@ -20,6 +22,28 @@ def sha256_bytes(b: bytes) -> str:
     h.update(b)
     return h.hexdigest()
 
+def safe_extract_pdf_text(pdf_bytes: bytes) -> str:
+    """Robust PDF extraction that works on Streamlit Cloud."""
+    text = ""
+
+    try:
+        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+            for page in pdf.pages:
+                try:
+                    ptxt = page.extract_text() or ""
+                    text += ptxt + "\n"
+                except:
+                    pass
+    except:
+        pass
+
+    # Clean and normalize
+    text = re.sub(r"\s+", " ", text)
+    text = text.replace("•", " ").replace("▪", " ").replace("●", " ")
+    text = re.sub(r"[^a-zA-Z0-9.,:/\-() ]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+
+    return text
 
 def extract_text_from_pdf_bytes(file_bytes: bytes) -> str:
     """
