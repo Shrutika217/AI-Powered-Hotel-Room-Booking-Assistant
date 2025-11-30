@@ -88,6 +88,7 @@ Data is stored in two tables:
 
 ## Project Structure
 
+```text
 HOTELBOT/
 ├── .cache_fast_store/
 ├── .cache_local_store/
@@ -114,6 +115,7 @@ HOTELBOT/
 ├── app.py
 ├── hotel_bookings.db
 └── requirements.txt
+```
 
 ---
 
